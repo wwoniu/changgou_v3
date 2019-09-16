@@ -19,7 +19,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @SpringBootApplication
 @EnableEurekaClient
 //mapper扫描 用通用的ampper扫描器
-@MapperScan("com.changgou.usercenter.dao")
+@MapperScan("com.changgou.user.dao")
 @EnableFeignClients(basePackages = {"com.changgou.goods.feign"})
 public class UserApplication {
 

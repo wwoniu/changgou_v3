@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
@@ -78,7 +78,7 @@
 				<div class="yui3-u-1-6 list">
 					<dl>
 						<dt><i>·</i> 订单中心</dt>
-						<dd><a href="/userCenter/myOrder"  target="_blank">我的订单</a></dd>
+						<dd><a th:href="@{'/userCenter/myOrder'(username=${username},token=${token})}"  target="_blank">我的订单</a></dd>
 						<dd>团购订单</dd>
 						<dd>本地生活订单 </dd>
 						<dd>我的预售</dd>

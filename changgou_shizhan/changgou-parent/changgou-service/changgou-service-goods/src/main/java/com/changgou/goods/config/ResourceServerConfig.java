@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  *
  * @author www.itheima.com
  * @version 1.0
- * @package com.changgou.usercenter.config *
+ * @package com.changgou.user.config *
  * @since 1.0
  */
 @Configuration

@@ -10,11 +10,12 @@
 	
     <link rel="stylesheet" type="text/css" href="/css/all.css" />
     <link rel="stylesheet" type="text/css" href="/css/pages-myOrder.css" />
-</head>
+	</head>
 
 	<body>
 		<!-- 头部栏位 -->
 		<!--页面顶部-->
+		<div id="app">
 <div id="nav-bottom">
 	<!--顶部-->
 	<div class="nav-top">
@@ -133,14 +134,17 @@
 
 							<div class="ever">
 								<ul class="sui-nav nav-tabs">
-									<li class="active">
-										<a href="#all" data-toggle="tab">全部订单<i class="mark">5</i></a>
+									<li :class="orderActive1">
+										<a href="#all" @click="orderActive()" data-toggle="tab">全部订单<i class="mark">{{orderList2.length}}</i></a>
 									</li>
-									<li>
-										<a href="#pay" data-toggle="tab">待付款<i class="mark">2</i></a>
+									<li :class="notpayActive1">
+										<a href="#pay" @click="notpayActive()" data-toggle="tab">待付款<i class="mark">{{notpayList.length}}</i></a>
 									</li>
-									<li>
-										<a href="#receive" data-toggle="tab">待收货<i class="mark">1</i></a>
+									<li :class="fahuoActive1">
+										<a href="#receive" @click="fahuoActive()" data-toggle="tab">待发货<i class="mark">{{deliveryTheGoodsList.length}}</i></a>
+									</li>
+									<li :class="deliveryTheGoodsActive1">
+										<a href="#receive" @click="deliveryTheGoodsActive()" data-toggle="tab">待收货<i class="mark">{{deliveryTheGoodsList.length}}</i></a>
 									</li>
 									<li>
 										<a href="#remark" data-toggle="tab">待评价<i class="mark">2</i></a>
@@ -187,111 +191,58 @@
 									<div id="all" class="tab-pane active">
 										<div class="orders">
 
-											
+											<div v-for="order in orderList">
 											<table class="sui-table table-bordered">
 												<thead>
 													<tr>
 														<th colspan="5">
-															<span class="ordertitle">2017-02-11 11:59　订单编号：7867473872181848 <span class="pull-right delete"><img src="/img/delete.png"/></span></span>
+															<span class="ordertitle">{{order.createTime}}　订单编号：{{order.id}} <span class="pull-right delete"><img src="/img/delete.png"/></span></span>
 														</th>
 													</tr>
 												</thead>
 												<tbody>
-													<tr>
+													<tr v-for="(orderItem,index) in order.orderItems">
 														<td width="60%">
-															<div class="typographic"><img src="/img/goods.png" />
-																<a href="#" class="block-text">包邮 正品玛姬儿压缩面膜无纺布纸膜100粒 送泡瓶面膜刷喷瓶 新款</a><span>x1</span>
+															<div class="typographic"><img :src="orderItem.image" />
+																<a href="#" class="block-text">{{orderItem.name}}</a><span>x1</span>
 																<ul class="unstyled list-inline">
 																	<li>申请售后</li>
 																</ul>
 															</div>
 														</td>
-														<td rowspan="2" width="8%" class="center">小丽</td>
-														<td rowspan="2" width="13%" class="center">
+														<td :rowspan="order.orderItems.length" width="8%" class="center" v-if="index<1">{{order.receiverContact}}</td>
+														<td :rowspan="order.orderItems.length" width="13%" class="center" v-if="index<1">
 															<ul class="unstyled">
-																<li>总金额¥138.00</li>
+																<li>总金额¥{{order.payMoney}}</li>
 																<li>在线支付</li>
 
 															</ul>
 														</td>
-														<td rowspan="2" width="8%" class="center">
-															<a href="#" class="btn">已完成 </a>
+														<td :rowspan="order.orderItems.length" width="8%" class="center" v-if="index<1">
+															<a href="#" class="btn" v-if="order.payStatus=0">未支付 </a>
+															<a href="#" class="btn" v-if="order.payStatus=1">已支付 </a>
 														</td>
-														<td rowspan="2" width="13%" class="center">
+														<td :rowspan="order.orderItems.length" width="13%" class="center" v-if="index<1">
 															<ul class="unstyled">
-																<li>
+																<li v-if="statu==0">
 																	<a href="/userCenter/mycomment" target="_blank">评价|晒单</a>
 																</li>
-
+																<li v-if="statu==1">
+																	<a @click="pay(order.id)" target="_blank">立即付款</a>
+																	<a @click="cancel(order.id)" target="_blank">取消订单</a>
+																</li>
+																<li v-if="statu==2">
+																	<a @click="confirm(order.id)" target="_blank">确认收货</a>
+																</li>
+																<li v-if="statu==3">
+																	<a target="_blank">提醒发货</a>
+																</li>
 															</ul>
-														</td>
-													</tr>
-													<tr>
-														<td width="50%">
-															<div class="typographic"><img src="/img/goods.png" />
-																<a href="#" class="block-text">包邮 正品玛姬儿压缩面膜无纺布纸膜100粒 送泡瓶面膜刷喷瓶 新款</a><span>x1</span>
-																<ul class="unstyled">
-																	<li>申请售后</li>
-
-																</ul>
-															</div>
 														</td>
 													</tr>
 												</tbody>
 											</table>
-
-											<table class="sui-table table-bordered">
-												<thead>
-													<tr>
-														<th colspan="5">
-															<span class="ordertitle"><i id="order-time">2017-03-11 12:59</i>　订单编号：<i id="order-num">7867473872555</i> <span class="pull-right delete"><img src="/img/delete.png"/></span></span>
-														</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td width="60%">
-															<div class="typographic"><img src="/img/goods.png" />
-																<a href="#" class="block-text">包邮 正品玛姬儿压缩面膜无纺布纸膜100粒 送泡瓶面膜刷喷瓶 新款</a><span>x1</span>
-																<ul class="unstyled list-inline">
-																	<li>申请售后</li>
-																</ul>
-															</div>
-														</td>
-														<td rowspan="2" width="8%" class="center">小丽</td>
-														<td rowspan="2" width="13%" class="center">
-															<ul class="unstyled">
-																<li>总金额¥138.00</li>
-																<li>在线支付</li>
-
-															</ul>
-														</td>
-														<td rowspan="2" width="8%" class="center">
-															<a href="#" class="btn">已完成 </a>
-														</td>
-														<td rowspan="2" width="13%" class="center">
-															<ul class="unstyled">
-																<li>
-																	<a href="/userCenter/mycomment" target="_blank">评价|晒单</a>
-																</li>
-
-															</ul>
-														</td>
-													</tr>
-													<tr>
-														<td width="50%">
-															<div class="typographic"><img src="/img/goods.png" />
-																<a href="#" class="block-text">包邮 正品玛姬儿压缩面膜无纺布纸膜100粒 送泡瓶面膜刷喷瓶 新款</a><span>x1</span>
-																<ul class="unstyled">
-																	<li>申请售后</li>
-
-																</ul>
-															</div>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-
+											</div>
 										</div>
 
 									</div>
@@ -533,10 +484,117 @@
 		</div>
 	</div>
 </div>
+		</div>
 <!--页面底部END-->
-		
+<script src="/js/axios.js"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/getParameter.js"></script>
+<script>
+	var username=getParameter("username");
+	var token=getParameter("token")
+	var app=new Vue({
+		el:"#app",
+		data:{
+			orderList:[],
+			orderList2:[],
+			notpayList:[],
+			deliveryTheGoodsList:[],
+			orderActive1: 'active',
+			notpayActive1: '',
+			deliveryTheGoodsActive1: '',
+			fahuoActive1:'',
+			statu:'1'
+		},
+		mounted (){
+			this.getMyorder();
+			this.notpay();
+			this.deliveryTheGoods();
+		},
+		methods:{
+			getMyorder:function () {
+				axios.get("/center/getmyOrder?username="+username,{headers:{
+						'Authorization':"Bearer "+token
+					}}).then(function (res) {
+						if (res.data.flag){
+							app.orderList2=res.data.data
+							app.orderList=res.data.data
+							console.log(res)
+						}
+				});
+			},
+			notpay:function () {
+				axios.get("/center/notpay?username="+username,{headers:{
+						'Authorization':"Bearer "+token
+					}}).then(function (res) {
+					if (res.data.flag){
+						app.notpayList=res.data.data
+						console.log(res)
+					}
+				});
+			},
+			deliveryTheGoods:function () {
+				axios.get("/center/deliveryTheGoods?username="+username,{headers:{
+						'Authorization':"Bearer "+token
+					}}).then(function (res) {
+					if (res.data.flag){
+						app.deliveryTheGoodsList=res.data.data
+						console.log(res)
+					}
+				});
+			},
+			orderActive:function () {
+				app.orderActive1="active";
+				app.notpayActive1='';
+				app.deliveryTheGoodsActive1= '';
+				app.fahuoActive1= '';
+				app.orderList=app.orderList2;
 
-	
+			},
+			notpayActive:function () {
+				app.orderActive1='';
+				app.notpayActive1='active';
+				app.deliveryTheGoodsActive1= '';
+				app.fahuoActive1= '';
+				app.orderList=app.notpayList;
+				app.statu='1';
+			},
+			deliveryTheGoodsActive:function () {
+				app.orderActive1='';
+				app.notpayActive1='';
+				app.fahuoActive1='';
+				app.deliveryTheGoodsActive1= 'active';
+				app.orderList=app.deliveryTheGoodsList;
+				app.statu='2';
+			},
+			fahuoActive:function () {
+				app.orderActive1='';
+				app.notpayActive1='';
+				app.fahuoActive1='active';
+				app.deliveryTheGoodsActive1= '';
+				app.orderList=app.deliveryTheGoodsList;
+				app.statu='3';
+			},
+			cancel:function (id) {
+				axios.get("/center/offOrder?orderId="+id,{headers:{
+						'Authorization':"Bearer "+token
+					}}).then(function (res) {
+					if (res.data.flag){
+						location.reload();
+					}
+				});
+			},
+			confirm:function (id) {
+				axios.get("/center/confirm?orderId="+id,{headers:{
+						'Authorization':"Bearer "+token
+					}}).then(function (res) {
+					if (res.data.flag){
+						location.reload();
+					}
+				});
+			}
+		}
+	})
+</script>
 
 </body>
 

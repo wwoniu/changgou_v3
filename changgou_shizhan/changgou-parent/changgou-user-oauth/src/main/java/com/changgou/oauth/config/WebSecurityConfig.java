@@ -25,8 +25,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(
-                "/usercenter/login",
-                "/usercenter/logout","/oauth/login","/css/**","/data/**","/fonts/**","/img/**","/js/**");
+                "/user/login",
+                "/user/logout","/oauth/login","/css/**","/data/**","/fonts/**","/img/**","/js/**");
     }
 
     /***
@@ -67,7 +67,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()       //启用表单身份验证
                 .loginPage("/oauth/login")
-                .loginProcessingUrl("/usercenter/login")
+                .loginProcessingUrl("/user/login")
                 .and()
                 .authorizeRequests()    //限制基于Request请求访问
                 .anyRequest()

@@ -40,8 +40,6 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
             return chain.filter(exchange);
         }
         //4.判断 是否为登录的URL 如果不是      权限校验
-
-
         //4.1 从头header中获取令牌数据
         String token = request.getHeaders().getFirst(AUTHORIZE_TOKEN);
 
@@ -68,18 +66,6 @@ public class AuthorizeFilter implements GlobalFilter, Ordered {
 
 
         //5 解析令牌数据 ( 判断解析是否正确,正确 就放行 ,否则 结束)
-
-        try {
-            //Claims claims = JwtUtil.parseJWT(token);
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            //解析失败
-            response.setStatusCode(HttpStatus.UNAUTHORIZED);
-            return response.setComplete();
-        }
 
         //添加头信息 传递给 各个微服务()
         request.mutate().header(AUTHORIZE_TOKEN,"Bearer "+ token);

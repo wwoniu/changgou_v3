@@ -2,7 +2,7 @@ server:
   port: 9001
 spring:
   application:
-    name: usercenter-auth
+    name: user-auth
   redis:
     host: 192.168.211.132
     port: 6379

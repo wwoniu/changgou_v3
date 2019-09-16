@@ -1,6 +1,6 @@
 package com.changgou.oauth.config;
 import com.changgou.oauth.util.UserJwt;
-import com.changgou.usercenter.feign.UserFeign;
+import com.changgou.user.feign.UserFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
